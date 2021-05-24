@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>Package</id>
+    <version>1.0.0</version>
+    <title>WPFNumericUpDown</title>
+    <authors>Ali Torabi</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/Torabi/WPFNumericUpDown</projectUrl>
+    <iconUrl>https://parametriczoo.com/wp-content/uploads/2018/08/para-zoo-logo-640x640.jpg</iconUrl>
+    <description>A NumericUpDown control for WPF applications</description>
+    <releaseNotes>Initial release</releaseNotes>
+    <copyright>2021 Ali Torabi</copyright>
+    <tags>NumericUpDown WPF CustomControl</tags>
+	<dependencies>
+      <group targetFramework=".NETFramework4.8" />
+    </dependencies>
+  </metadata>
+</package>

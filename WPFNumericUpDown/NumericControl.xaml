@@ -18,7 +18,7 @@
 
         </Grid.ColumnDefinitions>
         <TextBox Grid.Column="0" x:Name="textBox" PreviewTextInput="textBox_PreviewTextInput" 
-                 local:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" VerticalContentAlignment="Bottom" ></TextBox>
+                 local:InputBindingsManager.UpdatePropertySourceWhenEnterPressed="TextBox.Text" VerticalContentAlignment="Center" ></TextBox>
         <Grid Grid.Column="1" >
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>

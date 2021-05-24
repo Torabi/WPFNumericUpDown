@@ -354,7 +354,7 @@ namespace WPFNumericUpDown
         /// <summary>
         /// filters the signed decimals
         /// </summary>
-        internal Regex signedDecimal = new Regex(@"^-?[0-9]*(\.?)[0-9]*$");
+        internal Regex signedDecimal = new Regex(@"^(-?)([0-9]*)(\.?)([0-9]*)$"); 
         /// <summary>
         /// filters the unsigned decimals
         /// </summary>
