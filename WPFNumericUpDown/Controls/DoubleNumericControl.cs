@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 /*
      MIT License
@@ -37,8 +38,27 @@ namespace WPFNumericUpDown
         public DoubleNumericControl()
         {
             // assign a default value 
-            DATA = new DoubleNumber(0, double.NegativeInfinity, double.PositiveInfinity, 1,4);
-            
+            //DATA = new DoubleNumber(0, double.NegativeInfinity, double.PositiveInfinity, 1,4);
+            //Minimum = double.NegativeInfinity;
+            //Maximum = double.PositiveInfinity;
+            //Inc = 1;
+            //genericNumber = new DoubleNumber(double.NegativeInfinity, double.PositiveInfinity, 1, 6);
+        }
+
+        internal override string FormatString => $"N{Decimals}";
+        internal override double increment(double value)
+        {
+            return value + Inc;
+        }
+        internal override double decrement(double value)
+        {
+            return value - Inc;
+        }
+        internal override string _regexPattern => (Minimum < 0) ? signedDecimal : unSignedDecimal;
+
+        public override bool ConvertToValue(string text, out double val)
+        {
+            return double.TryParse(text, out val);
         }
     }
 }

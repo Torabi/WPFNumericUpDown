@@ -52,13 +52,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Commands\IncrementCommand.cs" />
     <Compile Include="Controls\DoubleNumericControl.cs" />
-    <Compile Include="Controls\FloatNumericControl.cs" />
+    <Compile Include="Controls\DecimalNumericControl.cs" />
+    <Compile Include="Converter\NumberConverter.cs" />
     <Compile Include="DecrementCommmand.cs" />
-    <Compile Include="GenericNumber\DoubleNumber.cs" />
-    <Compile Include="GenericNumber\FloatNumber.cs" />
-    <Compile Include="GenericNumber\GenericNumber.cs" />
-    <Compile Include="GenericNumber\IntegerNumber.cs" />
+    <None Include="GenericNumber\DoubleNumber.cs" />
+    <None Include="GenericNumber\DecimalNumber.cs" />
+    <None Include="GenericNumber\GenericNumber.cs" />
+    <None Include="GenericNumber\IntegerNumber.cs" />
     <Compile Include="Controls\GenericNumericControl.cs" />
     <Compile Include="Controls\IntegerNumericControl.cs" />
     <Compile Include="IncrementCommand.cs" />

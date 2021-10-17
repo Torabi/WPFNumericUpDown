@@ -47,7 +47,7 @@ namespace WPFNumericUpDown
         ICommand command;
         Timer timer;
 
-        internal abstract Regex _regexPattern { get; }
+        internal abstract string _regexPattern { get; }
         #endregion
         /// <summary>
         /// main constructor
@@ -70,8 +70,11 @@ namespace WPFNumericUpDown
         /// <param name="e"></param>
         private void Timer_Elapsed(object sender, ElapsedEventArgs e)
         {
-            if (command.CanExecute(null))
-                command.Execute(null);
+            Dispatcher?.Invoke(() =>
+            {
+            if (command != null && command.CanExecute(null))
+                    command.Execute(null);
+            });
             timer.Interval = 100;
         }
         /// <summary>
@@ -82,7 +85,12 @@ namespace WPFNumericUpDown
         private void incBTN_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
 
-            command = ((Button)sender).Command;
+            //command = ((Button)sender).Command;
+            Button btn = sender as Button;
+
+            command = btn.Name == incBTN.Name? IncrementCommand : DecrementCommand ;
+            if (command.CanExecute(null))
+                command.Execute(null);
             timer.Start();
         }
         /// <summary>
@@ -107,8 +115,12 @@ namespace WPFNumericUpDown
         private void textBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
 
-            e.Handled = !_regexPattern.IsMatch(e.Text);
+            e.Handled = !Regex.IsMatch(e.Text,_regexPattern);
         }
 
+        public abstract ICommand IncrementCommand { get;}
+        public abstract ICommand DecrementCommand { get; }
+
+        
     }
 }

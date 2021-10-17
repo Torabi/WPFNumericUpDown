@@ -31,19 +31,19 @@ namespace WPFNumericUpDown
     class DecrementCommmand<T> : ICommand where T : struct, IFormattable, IComparable<T>
     {
         public event EventHandler CanExecuteChanged;
-        public DecrementCommmand(GenericNumber<T> modelView)
+        public DecrementCommmand(GenericNumericControl<T> modelView)
         {
-            gmv = modelView;
+            _control = modelView;
         }
-        GenericNumber<T> gmv;
+        GenericNumericControl<T> _control;
         public bool CanExecute(object parameter)
         {
-            return gmv.Value.CompareTo(gmv._min) > 0;
+            return _control.DATA.CompareTo(_control.Minimum) > 0;
         }
 
         public void Execute(object parameter)
         {
-            gmv.Decrement();
+            _control.DATA= _control.Decrement();
         }
     }
 }

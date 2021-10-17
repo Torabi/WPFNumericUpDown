@@ -40,7 +40,7 @@ namespace WPFNumericUpDown
         /// <param name="max"><inheritdoc/></param>
         /// <param name="inc"><inheritdoc/></param>
         /// <param name="decimals"><inheritdoc/></param>
-        public DoubleNumber(double value,double min,double max,double inc,int decimals) : base(value, min, max, inc,decimals) { }
+        public DoubleNumber(double min,double max,double inc,int decimals) : base( min, max, inc,decimals) { }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
@@ -51,25 +51,25 @@ namespace WPFNumericUpDown
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        internal override bool ConvertToValue(out double result)
+        public override bool ConvertToValue(string text, out double result)
         {
-            return double.TryParse(_stringValue, out result);
+            return double.TryParse(text, out result);
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
-        internal override double decrement()
+        internal override double decrement(double value)
         {
-            return _value - _increment;
+            return value - _increment;
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
-        internal override double increment()
+        internal override double increment(double value)
         {
-            return _value + _increment;
+            return value + _increment;
         }
         /// <summary>
         /// <inheritdoc/>

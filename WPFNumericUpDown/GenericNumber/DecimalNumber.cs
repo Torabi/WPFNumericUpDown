@@ -30,7 +30,7 @@ namespace WPFNumericUpDown
     /// <summary>
     /// class represnet a constrained float number
     /// </summary>
-    public class FloatNumber : GenericNumber<float>
+    public class DecimalNumber : GenericNumber<decimal>
     {
         
         /// <summary>
@@ -41,7 +41,7 @@ namespace WPFNumericUpDown
         /// <param name="max"><inheritdoc/></param>
         /// <param name="inc"><inheritdoc/></param>
         /// <param name="decimals"><inheritdoc/></param>
-        public FloatNumber(float value,float min,float max, float inc, int decimals):base(value,min,max,inc,decimals) { }
+        public DecimalNumber(decimal min, decimal max, decimal inc, int decimals):base(min,max,inc,decimals) { }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
@@ -53,25 +53,25 @@ namespace WPFNumericUpDown
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        internal override bool ConvertToValue(out float result)
+        public override bool ConvertToValue(string text, out decimal result)
         {
-            return float.TryParse(_stringValue, out result);
+            return decimal.TryParse(text, out result);
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
-        internal override float decrement()
+        internal override decimal decrement(decimal value)
         {
-            return _value - _increment;
+            return value - _increment;
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
-        internal override float increment()
+        internal override decimal increment(decimal value)
         {
-            return _value + _increment;
+            return value + _increment;
         }
         /// <summary>
         /// <inheritdoc/>

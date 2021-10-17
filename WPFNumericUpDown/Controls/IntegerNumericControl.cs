@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 /*
      MIT License
@@ -34,10 +35,27 @@ namespace WPFNumericUpDown
         /// <summary>
         /// represnet the integer number without constrain (default value 0)
         /// </summary>
-        public IntegerNumericControl()
+        public IntegerNumericControl() 
         {
-            DATA = new IntegerNumber(0, int.MinValue, int.MaxValue);
-            
+            //DATA = new IntegerNumber(0, int.MinValue, int.MaxValue);
+            //genericNumber = new IntegerNumber(int.MinValue, int.MaxValue, 1);
+
+        }
+
+        internal override string FormatString => "";
+        internal override int increment(int value)
+        {
+            return value+Inc;
+        }
+        internal override int decrement(int value)
+        {
+            return value-Inc;
+        }
+        internal override string _regexPattern => (Minimum < 0) ? signedInteger : unSignedInteger;
+
+        public override bool ConvertToValue(string text, out int val)
+        {
+            return int.TryParse(text, out val);
         }
     }
 }

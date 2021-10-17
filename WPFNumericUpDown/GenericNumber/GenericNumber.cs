@@ -45,14 +45,14 @@ namespace WPFNumericUpDown
         /// <param name="max">maximum value</param>
         /// <param name="inc">increment value used to increment or decrement the current value</param>
         /// <param name="decimals">number of deciams shown on the text box</param>
-        public GenericNumber (T value,T min, T max,T inc, int decimals)
+        public GenericNumber (T min, T max,T inc, int decimals)
         {
             
             _min = min;
             _max = max;
             _increment = inc;
             _decimals = decimals;
-            Value = value;
+            //Value = value;
 
         }
         /// <summary>
@@ -62,7 +62,7 @@ namespace WPFNumericUpDown
         /// <summary>
         /// the current value 
         /// </summary>
-        internal T _value;
+        //internal T _value;
         /// <summary>
         /// minimum value
         /// </summary>
@@ -78,7 +78,7 @@ namespace WPFNumericUpDown
         /// <summary>
         /// the string value corressponding to the current value 
         /// </summary>
-        internal string _stringValue;
+        //internal string _stringValue;
 
         #region Helper methods 
 
@@ -86,9 +86,9 @@ namespace WPFNumericUpDown
         {
             return (int)Convert.ChangeType(val, typeof(int));
         }
-        float toFloat(T val)
+        decimal toDecimal(T val)
         {
-            return (float)Convert.ChangeType(val, typeof(float));
+            return (decimal)Convert.ChangeType(val, typeof(decimal));
         }
         double toDouble(T val)
         {
@@ -98,9 +98,9 @@ namespace WPFNumericUpDown
         {
             return (T)Convert.ChangeType(val, typeof(int));
         }
-        T toT(float val)
+        T toT(decimal val)
         {
-            return (T)Convert.ChangeType(val, typeof(float));
+            return (T)Convert.ChangeType(val, typeof(decimal));
         }
         T toT(double val)
         {
@@ -113,23 +113,23 @@ namespace WPFNumericUpDown
         /// returns <c>_value + _increment</c>
         /// </summary>
         /// <returns></returns>
-        internal virtual T increment()
+        internal virtual T increment(T value)
         {
             if (typeof(T).Equals(typeof(int)))
             {
-                return toT(toInt(_value) + toInt(_increment));
+                return toT(toInt(value) + toInt(_increment));
             }
-            else if (typeof(T).Equals(typeof(float)))
+            else if (typeof(T).Equals(typeof(decimal)))
             {
-                return toT(toFloat(_value) + toFloat(_increment));
+                return toT(toDecimal(value) + toDecimal(_increment));
             }
             else if (typeof(T).Equals(typeof(double)))
             {
-                return toT(toDouble(_value) + toDouble(_increment));
+                return toT(toDouble(value) + toDouble(_increment));
             }
             else
             {
-                throw new Exception("T expected int,float and double");
+                throw new Exception("T expected int,decimal and double");
             }
         }
 
@@ -139,23 +139,23 @@ namespace WPFNumericUpDown
         /// returns <c>_value - _increment</c>
         /// </summary>
         /// <returns></returns>
-        internal virtual T decrement()
+        internal virtual T decrement(T value)
         {
             if (typeof(T).Equals(typeof(int)))
             {
-                return toT(toInt(_value) - toInt(_increment));                
+                return toT(toInt(value) - toInt(_increment));                
             }
-            else if (typeof(T).Equals(typeof(float)))
+            else if (typeof(T).Equals(typeof(decimal)))
             {
-                return toT(toFloat(_value) - toFloat(_increment));
+                return toT(toDecimal(value) - toDecimal(_increment));
             }
             else if (typeof(T).Equals(typeof(double)))
             {
-                return toT(toDouble(_value) - toDouble(_increment));
+                return toT(toDouble(value) - toDouble(_increment));
             }
             else
             {
-                throw new Exception("T expected int,float and double");
+                throw new Exception("T expected int,decimal and double");
             }
         }
         /// <summary>
@@ -168,14 +168,15 @@ namespace WPFNumericUpDown
                 {
                     return (toInt(_min) < 0) ? signedInteger : unSignedInteger;
                 }
-                else if (typeof(T).Equals(typeof(float)))
+                else if (typeof(T).Equals(typeof(decimal)))
                 {
-                    return (toFloat(_min) < 0) ? signedDecimal : unSignedDecimal;
+                    return (toDecimal(_min) < 0) ? signedDecimal : unSignedDecimal;
                 }
                 else if (typeof(T).Equals(typeof(double)))
                 {
                     return (toDouble(_min) < 0) ? signedDecimal : unSignedDecimal;
                 }
+
                 else
                 {
                     return signedDecimal;
@@ -183,121 +184,112 @@ namespace WPFNumericUpDown
 
             }
         }
-        /// <summary>
-        /// increment the current value by adding the <c>_increment</c> value to the current value
-        /// </summary>
-        public void Increment()
-        {
-            T temp = increment();
-            if (temp.CompareTo(_max) > 0)
-            {
-                Value = _max;
-            }
-            else
-            {
-                Value = temp;
-            }
-        }
-        /// <summary>
-        /// decrement the current value by subtracting the <c>_increment</c> value from the current value
-        /// </summary>
-        public void Decrement()
-        {
-            T temp = decrement();
-            if (temp.CompareTo(_min) < 0)
-            {
-                Value = _min;
-            }
-            else
-            {
-                Value = temp;
-            }
-        }
-        /// <summary>
-        /// get and sets the current value
-        /// </summary>
-        public T Value
-        {
-            get
-            {
-                return _value;
-            }
-            set
-            {
-                _value = value;
-                StringValue = ConvertToString();
-            }
-        }
+        
+        
+        ///// <summary>
+        ///// get and sets the current value
+        ///// </summary>
+        //public T Value
+        //{
+        //    get
+        //    {
+        //        return _value;
+        //    }
+        //    set
+        //    {
+        //        if (_value.CompareTo(value) == 0)
+        //            return;// nothing to do 
+        //        if (value.CompareTo(_min) < 0)
+        //        {
+        //            _value = _min;
+                    
+        //        }
+        //        else if (value.CompareTo(_max) > 0)
+        //        {
+        //            _value = _max;
+                    
+        //        }
+        //        else
+        //        {
+        //            _value = value;
+                    
+        //        }
+        //        //StringValue = ConvertToString(_value);
+        //        NotifyPropertyChanged();
+                
+        //    }
+        //}
         /// <summary>
         /// The string value shown in the text box .
         /// this property fires the <c>NotifyPropertyChanged</c>
         /// </summary>
-        public string StringValue
-        {
-            get
-            {
-                return _stringValue;
-            }
-            set
-            {
-               
-                _stringValue = value;
-                if (_stringValue == string.Empty)
-                    return;
-                if (!ConvertToValue(out T temp))
-                    return;
-                
-                if (temp.CompareTo(_min) < 0 )
-                {
-                    _value = _min;
-                    _stringValue = ConvertToString();
-                }else if ( temp.CompareTo(_max) > 0)
-                {
-                    _value = _max;
-                    _stringValue = ConvertToString();
-                }
-                else
-                {
-                    _value = temp;
-                    _stringValue = ConvertToString();
-                }
-                NotifyPropertyChanged();
-            }
-        }
+        //public string StringValue
+        //{
+        //    get
+        //    {
+        //        return _stringValue;
+        //    }
+        //    set
+        //    {
+
+
+        //        _stringValue = value;
+        //        if (_stringValue == string.Empty)
+        //            return;
+        //        if (!ConvertToValue(value, out T temp))
+        //            return;
+        //        Value = temp;
+        //        //if (temp.CompareTo(_min) < 0 )
+        //        //{
+        //        //    _value = _min;
+        //        //    _stringValue = ConvertToString();
+        //        //}else if ( temp.CompareTo(_max) > 0)
+        //        //{
+        //        //    _value = _max;
+        //        //    _stringValue = ConvertToString();
+        //        //}
+        //        //else
+        //        //{
+        //        //    _value = temp;
+        //        //    _stringValue = ConvertToString();
+        //        //}
+        //        NotifyPropertyChanged();
+        //    }
+        //}
         /// <summary>
         /// convert the current value to the string
         /// </summary>
         /// <returns></returns>
-        string ConvertToString()
+        public string ConvertToString(T value )
         {
-            return _value.ToString(FormatString, CultureInfo.CurrentCulture);
+            return value.ToString(FormatString, CultureInfo.CurrentCulture);
         }
         /// <summary>
         /// override this method to parse the current string to type (T)
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        internal virtual bool ConvertToValue(out T val)
+        public virtual bool ConvertToValue(string text, out T val)
         {
             bool result = false;
             if (typeof(T).Equals(typeof(int)))
             {
-                result= int.TryParse(_stringValue, out int x);
+                result= int.TryParse(text, out int x);
                 val = toT(x);
             }
-            else if (typeof(T).Equals(typeof(float)))
+            else if (typeof(T).Equals(typeof(decimal)))
             {
-                result = float.TryParse(_stringValue, out float x);
+                result = decimal.TryParse(text, out decimal x);
                 val = toT(x);
             }
             else if (typeof(T).Equals(typeof(double)))
             {
-                result = double.TryParse(_stringValue, out double x);
+                result = double.TryParse(text, out double x);
                 val = toT(x);
             }
             else
             {
-                throw new Exception("T expected int,float and double");
+                throw new Exception("T expected int,decimal and double");
             }
             return result;
         }
@@ -312,7 +304,7 @@ namespace WPFNumericUpDown
                 {
                     return "";
                 }
-                else if (typeof(T).Equals(typeof(float)))
+                else if (typeof(T).Equals(typeof(decimal)))
                 {
                     return $"F{_decimals}";
                 }
@@ -322,7 +314,7 @@ namespace WPFNumericUpDown
                 }
                 else
                 {
-                    throw new Exception("T expected int,float and double");
+                    throw new Exception("T expected int,decimal and double");
                 }
             }
 
@@ -345,11 +337,11 @@ namespace WPFNumericUpDown
         /// <summary>
         /// create an instance of the <c>IncrementCommand</c> for the increment button in UI 
         /// </summary>
-        internal IncrementCommand<T> IncrementCommand => new IncrementCommand<T>(this);
+        //internal IncrementCommand<T> IncrementCommand => new IncrementCommand<T>(this);
         /// <summary>
         /// create an instance of the <c>DecrementCommand</c> for the increment button in UI 
         /// </summary>
-        internal DecrementCommmand<T> DecrementCommand => new DecrementCommmand<T>(this);
+        //internal DecrementCommmand<T> DecrementCommand => new DecrementCommmand<T>(this);
 
         /// <summary>
         /// filters the signed decimals

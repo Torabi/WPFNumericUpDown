@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 /*
      MIT License
@@ -29,15 +30,34 @@ namespace WPFNumericUpDown
     /// <summary>
     /// Class represent a numeric up down control for float vlaue 
     /// </summary>
-    public class FloatNumericControl : GenericNumericControl<float>
+    public class DecimalNumericControl : GenericNumericControl<decimal>
     {
         /// <summary>
         /// construct a non-constrain float numbder with 2 decimals (default value 0)
         /// </summary>
-        public FloatNumericControl()
+        public DecimalNumericControl()
         {
-            DATA = new FloatNumber(0, -float.NegativeInfinity, float.PositiveInfinity, 1,2);
+            //DATA = new FloatNumber(0, -float.NegativeInfinity, float.PositiveInfinity, 1,2);
             //dataBinding();
+            //Minimum = decimal.MinValue;
+            //Maximum = decimal.MaxValue;
+            //Inc = 1m;
+            //genericNumber = new DecimalNumber(Minimum, Maximum, Inc, Decimals);
+        }
+        internal override string FormatString => $"F{Decimals}";
+        internal override decimal increment(decimal value)
+        {
+            return value + Inc;
+        }
+        internal override decimal decrement(decimal value)
+        {
+            return value - Inc;
+        }
+        internal override string _regexPattern => (Minimum < 0) ? signedDecimal : unSignedDecimal;
+
+        public override bool ConvertToValue(string text, out decimal val)
+        {
+            return decimal.TryParse(text, out val);
         }
     }
 }

@@ -31,19 +31,20 @@ namespace WPFNumericUpDown
     class IncrementCommand<T> :ICommand where T : struct, IFormattable, IComparable<T>
     {
         public event EventHandler CanExecuteChanged;
-        public IncrementCommand  (GenericNumber<T> modelView) 
+
+        public IncrementCommand  (GenericNumericControl<T> control) 
         {
-            gmv = modelView;
+            _control = control;
         }
-        GenericNumber<T> gmv; 
+        GenericNumericControl<T> _control; 
         public bool CanExecute(object parameter)
         {
-            return gmv.Value.CompareTo(gmv._max) < 0;
+            return _control.DATA.CompareTo(_control.Maximum) < 0;
         }
 
         public void Execute(object parameter)
         {
-            gmv.Increment();   
+            _control.DATA = _control.Increment();   
         }
     }
 }

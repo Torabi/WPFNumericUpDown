@@ -40,32 +40,32 @@ namespace WPFNumericUpDown
         /// <param name="min"><inheritdoc/></param>
         /// <param name="max"><inheritdoc/></param>
         /// <param name="inc"><inheritdoc/></param>
-        public IntegerNumber(int value,int min,int max, int inc = 1) : base(value, min, max, inc,0) { }
+        public IntegerNumber(int min,int max, int inc = 1) : base( min, max, inc,0) { }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
-        internal override int increment()
+        internal override int increment(int value)
         {
-            return _value + _increment;
+            return value + _increment;
 
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
-        internal override int decrement()
+        internal override int decrement(int value)
         {
-            return _value - _increment;
+            return value - _increment;
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <param name="result"></param>
         /// <returns></returns>
-        internal override bool ConvertToValue(out int result)
+        public override bool ConvertToValue(string text, out int result)
         {
-            return int.TryParse(_stringValue, out result);
+            return int.TryParse(text, out result);
                 
         }
         /// <summary>
