@@ -40,11 +40,11 @@ namespace WPFNumericUpDown
         /// <param name="max"><inheritdoc/></param>
         /// <param name="inc"><inheritdoc/></param>
         /// <param name="decimals"><inheritdoc/></param>
-        public DoubleNumber(double min,double max,double inc,int decimals) : base( min, max, inc,decimals) { }
+        public DoubleNumber(double value,double min,double max,double inc,int decimals) : base(value, min, max, inc,decimals) { }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        internal override Regex _regex => (_min < 0) ? signedDecimal : unSignedDecimal;
+        internal override Regex _regex => (Min < 0) ? signedDecimal : unSignedDecimal;
 
         /// <summary>
         /// <inheritdoc/>
@@ -61,7 +61,7 @@ namespace WPFNumericUpDown
         /// <returns></returns>
         internal override double decrement(double value)
         {
-            return value - _increment;
+            return value - Inc;
         }
         /// <summary>
         /// <inheritdoc/>
@@ -69,11 +69,11 @@ namespace WPFNumericUpDown
         /// <returns></returns>
         internal override double increment(double value)
         {
-            return value + _increment;
+            return value + Inc;
         }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        internal override string FormatString => $"N{_decimals}";
+        internal override string FormatString => $"N{Decimals}";
     }
 }

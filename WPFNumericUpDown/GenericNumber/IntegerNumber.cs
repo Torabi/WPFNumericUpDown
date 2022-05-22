@@ -40,14 +40,14 @@ namespace WPFNumericUpDown
         /// <param name="min"><inheritdoc/></param>
         /// <param name="max"><inheritdoc/></param>
         /// <param name="inc"><inheritdoc/></param>
-        public IntegerNumber(int min,int max, int inc = 1) : base( min, max, inc,0) { }
+        public IntegerNumber(int value,int min,int max, int inc = 1) : base(value, min, max, inc,0) { }
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
         /// <returns></returns>
         internal override int increment(int value)
         {
-            return value + _increment;
+            return value + Inc;
 
         }
         /// <summary>
@@ -56,7 +56,7 @@ namespace WPFNumericUpDown
         /// <returns></returns>
         internal override int decrement(int value)
         {
-            return value - _increment;
+            return value - Inc;
         }
         /// <summary>
         /// <inheritdoc/>
@@ -71,7 +71,7 @@ namespace WPFNumericUpDown
         /// <summary>
         /// <inheritdoc/>
         /// </summary>
-        internal override Regex _regex => (_min < 0) ? signedInteger : unSignedInteger;
+        internal override Regex _regex => (Min < 0) ? signedInteger : unSignedInteger;
         /// <summary>
         /// <inheritdoc/>
         /// </summary>

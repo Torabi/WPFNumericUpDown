@@ -45,40 +45,43 @@ namespace WPFNumericUpDown
         /// <param name="max">maximum value</param>
         /// <param name="inc">increment value used to increment or decrement the current value</param>
         /// <param name="decimals">number of deciams shown on the text box</param>
-        public GenericNumber (T min, T max,T inc, int decimals)
+        public GenericNumber (T value, T min, T max,T inc, int decimals)
         {
             
-            _min = min;
-            _max = max;
-            _increment = inc;
-            _decimals = decimals;
-            //Value = value;
+            Min = min;
+            Max = max;
+            Inc = inc;
+            Decimals = decimals;
+            Value = value;
 
         }
         /// <summary>
         /// number of decimals shown in the textbox
         /// </summary>
-        internal int _decimals = 0;
+        public int Decimals = 0;
         /// <summary>
         /// the current value 
         /// </summary>
-        //internal T _value;
+        internal T _value;
         /// <summary>
         /// minimum value
         /// </summary>
-        internal T _min;
+        public T Min;
         /// <summary>
         /// maximum value
         /// </summary>
-        internal T _max;
+        public T Max;
         /// <summary>
         /// value used to increment or decrement the current value
         /// </summary>
-        internal T _increment;
+        public T Inc;
         /// <summary>
         /// the string value corressponding to the current value 
         /// </summary>
         //internal string _stringValue;
+
+ 
+
 
         #region Helper methods 
 
@@ -117,15 +120,15 @@ namespace WPFNumericUpDown
         {
             if (typeof(T).Equals(typeof(int)))
             {
-                return toT(toInt(value) + toInt(_increment));
+                return toT(toInt(value) + toInt(Inc));
             }
             else if (typeof(T).Equals(typeof(decimal)))
             {
-                return toT(toDecimal(value) + toDecimal(_increment));
+                return toT(toDecimal(value) + toDecimal(Inc));
             }
             else if (typeof(T).Equals(typeof(double)))
             {
-                return toT(toDouble(value) + toDouble(_increment));
+                return toT(toDouble(value) + toDouble(Inc));
             }
             else
             {
@@ -143,15 +146,15 @@ namespace WPFNumericUpDown
         {
             if (typeof(T).Equals(typeof(int)))
             {
-                return toT(toInt(value) - toInt(_increment));                
+                return toT(toInt(value) - toInt(Inc));                
             }
             else if (typeof(T).Equals(typeof(decimal)))
             {
-                return toT(toDecimal(value) - toDecimal(_increment));
+                return toT(toDecimal(value) - toDecimal(Inc));
             }
             else if (typeof(T).Equals(typeof(double)))
             {
-                return toT(toDouble(value) - toDouble(_increment));
+                return toT(toDouble(value) - toDouble(Inc));
             }
             else
             {
@@ -166,15 +169,15 @@ namespace WPFNumericUpDown
             get {
                 if (typeof(T).Equals(typeof(int)))
                 {
-                    return (toInt(_min) < 0) ? signedInteger : unSignedInteger;
+                    return (toInt(Min) < 0) ? signedInteger : unSignedInteger;
                 }
                 else if (typeof(T).Equals(typeof(decimal)))
                 {
-                    return (toDecimal(_min) < 0) ? signedDecimal : unSignedDecimal;
+                    return (toDecimal(Min) < 0) ? signedDecimal : unSignedDecimal;
                 }
                 else if (typeof(T).Equals(typeof(double)))
                 {
-                    return (toDouble(_min) < 0) ? signedDecimal : unSignedDecimal;
+                    return (toDouble(Min) < 0) ? signedDecimal : unSignedDecimal;
                 }
 
                 else
@@ -184,41 +187,41 @@ namespace WPFNumericUpDown
 
             }
         }
-        
-        
-        ///// <summary>
-        ///// get and sets the current value
-        ///// </summary>
-        //public T Value
-        //{
-        //    get
-        //    {
-        //        return _value;
-        //    }
-        //    set
-        //    {
-        //        if (_value.CompareTo(value) == 0)
-        //            return;// nothing to do 
-        //        if (value.CompareTo(_min) < 0)
-        //        {
-        //            _value = _min;
-                    
-        //        }
-        //        else if (value.CompareTo(_max) > 0)
-        //        {
-        //            _value = _max;
-                    
-        //        }
-        //        else
-        //        {
-        //            _value = value;
-                    
-        //        }
-        //        //StringValue = ConvertToString(_value);
-        //        NotifyPropertyChanged();
-                
-        //    }
-        //}
+
+
+        /// <summary>
+        /// get and sets the current value
+        /// </summary>
+        public T Value
+        {
+            get
+            {
+                return _value;
+            }
+            set
+            {
+                if (_value.CompareTo(value) == 0)
+                    return;// nothing to do 
+                if (value.CompareTo(Min) < 0)
+                {
+                    _value = Min;
+
+                }
+                else if (value.CompareTo(Max) > 0)
+                {
+                    _value = Max;
+
+                }
+                else
+                {
+                    _value = value;
+
+                }
+                //StringValue = ConvertToString(_value);
+                NotifyPropertyChanged();
+
+            }
+        }
         /// <summary>
         /// The string value shown in the text box .
         /// this property fires the <c>NotifyPropertyChanged</c>
@@ -306,11 +309,11 @@ namespace WPFNumericUpDown
                 }
                 else if (typeof(T).Equals(typeof(decimal)))
                 {
-                    return $"F{_decimals}";
+                    return $"F{Decimals}";
                 }
                 else if (typeof(T).Equals(typeof(double)))
                 {
-                    return $"N{_decimals}";
+                    return $"N{Decimals}";
                 }
                 else
                 {
